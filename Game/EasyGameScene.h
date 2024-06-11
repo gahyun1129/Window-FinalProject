@@ -1,8 +1,13 @@
 #pragma once
-class LobbyScene : public Scene
+class EasyGameScene : public Scene
 {
+
 public:
-	virtual ~LobbyScene() override;
+	Player* p1;
+	Player* p2;
+
+public:
+	virtual ~EasyGameScene() override;
 	virtual void Init() override;
 	virtual void Update(const float frameTime) override;
 	virtual void Draw(HDC hDC) override;

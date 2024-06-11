@@ -8,10 +8,7 @@
 
 #define PI 3.1415926535897
 
-enum COLOR { WHITE, BLACK, OBSTACLE };
-enum DIREC { UP, DOWN, LEFT, RIGHT };
-enum TYPE { NONE, SPECIAL };
-enum ENEMYTYPE { PASS, NONPASS };
+enum DIRECTION { LEFT, RIGHT };
 enum VK_KEY {
 	VK_0 = 48,
 	VK_1 = 49,

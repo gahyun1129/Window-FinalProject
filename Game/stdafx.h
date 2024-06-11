@@ -33,16 +33,11 @@
 using namespace std;
 using namespace std::chrono;
 
-//#include "vector.h"
-//#include "menuScene.h"
-//#include "stage2Scene.h"
-//#include "overScene.h"
-//#include "clearScene.h"
-//#include "resource.h"
-//#include "NetWork.h"
 #include "define.h"
 #include "Camera.h"
+#include "Player.h"
 #include "Scene.h"
+#include "EasyGameScene.h"
 #include "LobbyScene.h"
 #include "GameFramework.h"
 
