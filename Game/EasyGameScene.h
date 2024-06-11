@@ -6,6 +6,8 @@ public:
 	Player* p1;
 	Player* p2;
 
+	CImage backgroud;
+
 public:
 	virtual ~EasyGameScene() override;
 	virtual void Init() override;

@@ -16,6 +16,8 @@ public:
 
 	bool isRunning = true;
 
+	RECT size;
+
 public:
 
 	GameFramework();

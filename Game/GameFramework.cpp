@@ -26,6 +26,7 @@ void GameFramework::Create(HWND hWnd)
 	SceneIndex = LOBBY;
 	mainCamera = new Camera;
 
+	GetClientRect(hWnd, &size);
 	CurScene->Init();
 }
 
