@@ -8,7 +8,10 @@ public:
 	int imgIndex = 0;
 	int offset;
 
-	POINT position;
+	POINT position = {10, 700};
+
+	bool isJump;
+	int jumpTime;
 
 public:
 

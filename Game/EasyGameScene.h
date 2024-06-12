@@ -8,6 +8,7 @@ public:
 
 	CImage backgroud;
 
+	
 public:
 	virtual ~EasyGameScene() override;
 	virtual void Init() override;
