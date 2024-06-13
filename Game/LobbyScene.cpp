@@ -105,6 +105,13 @@ void LobbyScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 			Framework.SceneIndex = EASY;
 			delete scene;
 		}
+		if (wParam == VK_B) {
+			Scene* scene = Framework.CurScene;   // ÇöÀç ¾ÀÀ» tmp¿¡ ³Ö°í Áö¿öÁÜ
+			Framework.CurScene = new BossGameScene;
+			Framework.CurScene->Init();
+			Framework.SceneIndex = HARD;
+			delete scene;
+		}
 		break;
 	}
 	case WM_LBUTTONDOWN: {

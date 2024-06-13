@@ -127,8 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossGameScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EasyGameScene.cpp" />
+    <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,9 +139,12 @@
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossGameScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="EasyGameScene.h" />
+    <ClInclude Include="FireBall.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Player.h" />
