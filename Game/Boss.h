@@ -11,6 +11,16 @@ public:
 
 	POINT position;
 
+	// Boss Movement
+	float velocityX;
+	float velocityY;
+	int jumpTerm = 3;
+	int attackTerm = 1;
+	bool isJumping;
+	bool jumpUp;
+
+	float jumpSpeed;
+
 public:
 
 };
