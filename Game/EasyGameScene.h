@@ -3,8 +3,8 @@ class EasyGameScene : public Scene
 {
 
 public:
-	Player* p1;
-	Player* p2;
+	Player* mario;
+	Player* luigi;
 
 	CImage backgroud;
 

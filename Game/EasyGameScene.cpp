@@ -4,58 +4,66 @@ extern GameFramework Framework;
 
 EasyGameScene::~EasyGameScene()
 {
-	delete(p1);
-	delete(p2);
+	delete(mario);
+	delete(luigi);
 }
 
 void EasyGameScene::Init()
 {
-	p1 = new Player;
-	p2 = new Player;
-
-	p1->img.Load(L"Image/FireMario.png");
-	p2->img.Load(L"Image/FireMario.png");
-
-	p1->offset = 810 / 16;
-	p2->offset = 810 / 16;
-
 	backgroud.Load(L"Image/Background.png");
 
+	mario = new Player;
+	luigi = new Player;
+
+	mario->img.Load(L"Image/BigMario.png");
+	luigi->img.Load(L"Image/Luigi.png");
+
+	mario->imgFrameW = 8;
+	luigi->imgFrameW = 8;
+
+	mario->imgFrameH = 4;
+	luigi->imgFrameH = 4;
+
+	mario->imgWidth = mario->img.GetWidth() / mario->imgFrameW;
+	mario->imgHeight = mario->img.GetHeight() / mario->imgFrameH;
+
+	luigi->imgWidth = luigi->img.GetWidth() / luigi->imgFrameW;
+	luigi->imgHeight = luigi->img.GetHeight() / luigi->imgFrameH;
 }
 
 void EasyGameScene::Update(const float frameTime)
 {
-	p1->imgIndex += 1;
-	if (p1->imgIndex == 16) {
-		p1->imgIndex = 0;
+	mario->imgIndex += 1;
+	if (mario->imgIndex == mario->imgFrameW) {
+		mario->imgIndex = 0;
 	}
-	if (p1->isJump) {
-		if (p1->jumpTime < 10) {
-			p1->position.y -= 10;
-			p1->jumpTime += 1;
+	if (mario->isJump) {
+		if (mario->jumpTime < 10) {
+			mario->position.y -= 10;
+			mario->jumpTime += 1;
 		}
 		else {
-			p1->position.y += 10;
-			p1->jumpTime += 1;
+			mario->position.y += 10;
+			mario->jumpTime += 1;
 
-			if (p1->jumpTime == 20) {
-				p1->isJump = false;
-				p1->jumpTime = 0;
+			if (mario->jumpTime == 20) {
+				mario->isJump = false;
+				mario->jumpTime = 0;
 			}
 		}
 	}
-	if (p2->isJump) {
-		if (p2->jumpTime < 10) {
-			p2->position.y -= 10;
-			p2->jumpTime += 1;
+	if (luigi->isJump) {
+		if (luigi->jumpTime < 10) {
+			luigi->position.y -= 10;
+			luigi->jumpTime += 1;
 		}
 		else {
-			p2->position.y += 10;
-			p2->jumpTime += 1;
+			luigi->position.y += 10;
+			luigi->jumpTime += 1;
 
-			if (p2->jumpTime == 20) {
-				p2->isJump = false;
-				p2->jumpTime = 0;
+			if (luigi->jumpTime == 20) {
+				luigi->isJump = false;
+				luigi->jumpTime = 0;
 			}
 		}
 	}
@@ -64,14 +72,14 @@ void EasyGameScene::Update(const float frameTime)
 void EasyGameScene::Draw(HDC hDC)
 {
 	backgroud.Draw(hDC, 0, 0, Framework.size.right, Framework.size.bottom, 0, 0, 800, 600);
-
-	if (p1->dir == LEFT) {
-		p1->img.Draw(hDC, p1->position.x + 100, p1->position.y,  p1->offset, 64, p1->offset * p1->imgIndex, 0, p1->offset, 64);
-	}
-	else {
-		//p1->img.Draw(hDC, 10, 10, p1->offset, 64, p1->offset * 13 - p1->imgIndex, 0, p1->offset, 64);
-	}
-	p2->img.Draw(hDC, p2->position.x, p2->position.y, 810 / 14, 64, 0, 0, 810 / 14, 64);
+	mario->img.Draw(hDC, mario->position.x + 100, mario->position.y, 
+						mario->imgWidth, mario->imgHeight, 
+						mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->amimIndex,
+						mario->imgWidth, mario->imgHeight);
+	luigi->img.Draw(hDC, luigi->position.x, luigi->position.y,
+		luigi->imgWidth, luigi->imgHeight,
+		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->amimIndex,
+		luigi->imgWidth, luigi->imgHeight);
 }
 
 void EasyGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -81,34 +89,34 @@ void EasyGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 	{
 		if (wParam == VK_W) {
-			p1->isJump = true;
+			mario->isJump = true;
 		}
 		else if (wParam == VK_A) {
-			p1->position.x -= 5;
-			if (p1->position.x <= 0) {
-				p1->position.x += 5;
+			mario->position.x -= 5;
+			if (mario->position.x <= 0) {
+				mario->position.x += 5;
 			}
 		}
 		else if (wParam == VK_D) {
-			p1->position.x += 5;
-			if (p1->position.x + 64 >= 1100) {
-				p1->position.x -= 5;
+			mario->position.x += 5;
+			if (mario->position.x + 64 >= 1100) {
+				mario->position.x -= 5;
 			}
 		}
 		else if (wParam == VK_LEFT) {
-			p2->position.x -= 5;
-			if (p2->position.x <= 0) {
-				p2->position.x += 5;
+			luigi->position.x -= 5;
+			if (luigi->position.x <= 0) {
+				luigi->position.x += 5;
 			}
 		}
 		else if (wParam == VK_RIGHT) {
-			p2->position.x += 5;
-			if (p2->position.x + 64 >= 1100) {
-				p2->position.x -= 5;
+			luigi->position.x += 5;
+			if (luigi->position.x + 64 >= 1100) {
+				luigi->position.x -= 5;
 			}
 		}
 		else if (wParam == VK_UP) {
-			p2->isJump = true;
+			luigi->isJump = true;
 		}
 		break;
 	}
