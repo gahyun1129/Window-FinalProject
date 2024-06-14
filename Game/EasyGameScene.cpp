@@ -13,11 +13,11 @@ void EasyGameScene::Init()
 	p1 = new Player;
 	p2 = new Player;
 
-	p1->img.Load(L"Image/BigMario.png");
+	p1->img.Load(L"Image/FireMario.png");
 	p2->img.Load(L"Image/FireMario.png");
 
-	p1->offset = 810 / 14;
-	p2->offset = 810 / 14;
+	p1->offset = 810 / 16;
+	p2->offset = 810 / 16;
 
 	backgroud.Load(L"Image/Background.png");
 
@@ -25,6 +25,10 @@ void EasyGameScene::Init()
 
 void EasyGameScene::Update(const float frameTime)
 {
+	p1->imgIndex += 1;
+	if (p1->imgIndex == 16) {
+		p1->imgIndex = 0;
+	}
 	if (p1->isJump) {
 		if (p1->jumpTime < 10) {
 			p1->position.y -= 10;
@@ -62,7 +66,7 @@ void EasyGameScene::Draw(HDC hDC)
 	backgroud.Draw(hDC, 0, 0, Framework.size.right, Framework.size.bottom, 0, 0, 800, 600);
 
 	if (p1->dir == LEFT) {
-		p1->img.Draw(hDC, p1->position.x, p1->position.y,  p1->offset, 64, 0, 0, p1->offset, 64);
+		p1->img.Draw(hDC, p1->position.x + 100, p1->position.y,  p1->offset, 64, p1->offset * p1->imgIndex, 0, p1->offset, 64);
 	}
 	else {
 		//p1->img.Draw(hDC, 10, 10, p1->offset, 64, p1->offset * 13 - p1->imgIndex, 0, p1->offset, 64);
