@@ -3,17 +3,20 @@ class BossGameScene : public Scene
 {
 
 public:
-	Player* p1;
-	Player* p2;
+	Player* mario;
+	Player* luigi;
 
 	Boss* boss;
 	POINT bossStartPos;
 	POINT bossEndPos;
-	float moveT;
 	vector<FireBall*> fireBalls;
 
 	CImage background;
 
+	// Timer
+	chrono::high_resolution_clock::time_point startTime;
+	int prevJumpingTime;	// 직전 점프 시각(초)
+	int prevAttackTime;		// 직전 공격 시각(초)
 public:
 	virtual ~BossGameScene() override;
 	virtual void Init() override;
