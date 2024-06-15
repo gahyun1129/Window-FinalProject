@@ -16,14 +16,19 @@ void EasyGameScene::InitPlayer()
 	mario->imgFrameH = 4;
 	luigi->imgFrameH = 4;
 
+	mario->imgIndex = 3;
+
 	mario->imgWidth = mario->img.GetWidth() / mario->imgFrameW;
 	mario->imgHeight = mario->img.GetHeight() / mario->imgFrameH;
 
 	luigi->imgWidth = luigi->img.GetWidth() / luigi->imgFrameW;
 	luigi->imgHeight = luigi->img.GetHeight() / luigi->imgFrameH;
 
-	mario->position = { 70, 770 };
-	luigi->position = { 20, 600 };
+	mario->position = { 20, 770 };
+	luigi->position = { 20, 500 };
+
+	mario->type = MARIO;
+	luigi->type = LUIGI;
 }
 
 void EasyGameScene::InitObstacles()
@@ -31,113 +36,137 @@ void EasyGameScene::InitObstacles()
 	Obstacle o;
 	o.size = { 0, 730, 350, 735 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 0
 
 	o.size = { 0, 715, 350, 720 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 1
 
 
 	o.size = { 970, 770, 980, 840 };
 	o.type = WALL_RIGHT;
-	obs.push_back(o);
+	obs.push_back(o); // 2
 
 
 	o.size = { 990, 740, 1100, 745 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 3
 
 	o.size = { 450, 670, 930, 675 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 4
 
-	o.size = { 500, 655, 940, 660 };
+	o.size = { 450, 655, 940, 660 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 5
 
 	o.size = { 0, 610, 450, 615 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 6
 
 	o.size = { 0, 595, 450, 600 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 7
 
 	o.size = { 140, 465, 500, 470 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 8
 
 	o.size = { 140, 450, 560, 455 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 9
 
 	o.size = { 530, 495, 900, 500 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 10
 
 	o.size = { 910, 530, 940, 535 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 11
 
 	o.size = { 990, 585, 1100, 590 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 12
 
 	o.size = { 560, 475, 1100, 480 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 13
 
 	o.size = { 0, 345, 780, 350 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 14
 
 	o.size = { 800, 375, 940, 380 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 15
 
 	o.size = { 160, 330, 550, 335 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 16
 
 	o.size = { 550, 270, 750, 275 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 17
 
 	o.size = { 800, 330, 940, 335 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 18
 
 	o.size = { 0, 210, 160, 215 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 19
 
 	o.size = { 330, 260, 470, 265 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 20
 
 	o.size = { 470, 200, 1100, 205 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 21
 
 	o.size = { 270, 140, 300, 145 };
 	o.type = WALL_BOTTOM;
-	obs.push_back(o);
+	obs.push_back(o); // 22
 
 	o.size = { 275, 120, 355, 125 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 23
 
 	o.size = { 385, 150, 420, 155 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 24
 
 	o.size = { 445, 180, 1100, 185 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 25
 
 	o.size = { 0, 830, 1100, 835 };
 	o.type = WALL_TOP;
-	obs.push_back(o);
+	obs.push_back(o); // 26
+
+	////////////////////////////////////////////////////////
+
+	o.size = { 530, 825, 600, 880 };
+	o.type = MARIO;
+	obs.push_back(o); // 27
+
+	o.size = { 750, 825, 820, 880 };
+	o.type = LUIGI;
+	obs.push_back(o); // 28
+
+
+	o.size = { 700, 650, 770, 660 };
+	o.type = BOTH;
+	obs.push_back(o); // 29
+
+	////////////////////////////////////////////////////////
+
+	o.size = { 250, 570, 274, 599 };
+	o.type = SWITCHSTICK;
+	obs.push_back(o); // 30
+
+	switchStick.size = { 250, 570, 274, 599 };
+	switchStick.img.Load(L"image/key.png");
 }
 
 void EasyGameScene::CollisionCheck()
@@ -149,12 +178,23 @@ void EasyGameScene::CollisionCheck()
 	for (const Obstacle& o : obs) {
 		if (IntersectRect(&tmp, &marioR, &o.size)) {
 			mario->CheckWithWall(o);
+			if (o.type == SWITCHSTICK) {
+				switchStick.index = o.index;
+			}
 			break;
 		}
 	}
 	for (const Obstacle& o : obs) {
 		if (IntersectRect(&tmp, &luigiR, &o.size)) {
 			luigi->CheckWithWall(o);
+			if (o.type == SWITCHSTICK) {
+				if (luigi->dir == LEFT && switchStick.index == 0) {
+					switchStick.index = 1;
+				}
+				if (luigi->dir == RIGHT && switchStick.index == 1) {
+					switchStick.index = 0;
+				}
+			}
 			break;
 		}
 	}
@@ -204,6 +244,8 @@ void EasyGameScene::Draw(HDC hDC)
 	for (Obstacle o : obs) {
 		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
 	}
+
+	switchStick.img.Draw(hDC, switchStick.size.left, switchStick.size.top, 24, 29, 24 * switchStick.index, 0, 24, 29);
 }
 
 

@@ -3,7 +3,9 @@ class Obstacle
 {
 public:
 	RECT size;
-	POINT position;
 	TYPE type;
+
+	CImage img;
+	int index = 0;
 };
 

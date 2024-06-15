@@ -29,6 +29,8 @@ public:
 
 	bool isFalling;
 
+	TYPE type;
+
 public:
 	void Move();
 	void PlayAnimation();

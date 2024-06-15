@@ -82,6 +82,37 @@ void Player::CheckWithWall(Obstacle o)
 	}
 	case WALL_RIGHT: {
 		position.x = o.size.left - imgWidth;
+		break;
+	}
+	case MARIO: {
+		if (type == LUIGI) {
+			position = { 20, 600 };
+		}
+		break;
+	}	
+	case LUIGI: {
+		if (type == MARIO) {
+			position = { 20, 770 };
+		}
+		break;
+	}
+	case BOTH: {
+		if (type == MARIO) {
+			position = { 20, 770 };
+		}
+		else if (type == LUIGI) {
+			position = { 20, 600 };
+		}
+		break;
+	}
+	case SWITCHSTICK: {
+		if (dir == LEFT && o.index == 0) {
+			o.index = 1;
+		}
+		if (dir == RIGHT && o.index == 1) {
+			o.index = 0;
+		}
+		break;
 	}
 	}
 }

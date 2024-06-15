@@ -10,6 +10,8 @@ public:
 
 	vector<Obstacle> obs;
 
+	Obstacle switchStick;
+
 public:
 	void InitPlayer();
 	void InitObstacles();
