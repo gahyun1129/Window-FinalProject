@@ -1,18 +1,17 @@
 #pragma once
-class FireBall
+class Particle
 {
 public:
-
 	CImage img;
-	DIRECTION dir = RIGHT;
-	int imgIndex = 0;
+	int imgIndex = 2;
 	int offsetX;
 	int offsetY;
+	int prevTime;
 
 	POINT position;
 
-	int velocity;
-
 public:
+	void Init(const POINT center);
 	void Draw(HDC hDC, int sceneX);
 };
+
