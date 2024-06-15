@@ -41,6 +41,7 @@ using namespace std::chrono;
 #include "Player.h"
 #include "Scene.h"
 #include "BossGameScene.h"
+#include "HardGameScene.h"
 #include "EasyGameScene.h"
 #include "LobbyScene.h"
 #include "GameFramework.h"

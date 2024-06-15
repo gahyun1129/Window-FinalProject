@@ -84,6 +84,10 @@ void Player::CheckWithWall(Obstacle& o)
 		position.x = o.size.left - imgWidth;
 		break;
 	}
+	case WALL_LEFT: {
+		position.x = o.size.right;
+		break;
+	}
 	case MARIO: {
 		if (type == LUIGI) {
 			position = { 20, 600 };
@@ -111,6 +115,18 @@ void Player::CheckWithWall(Obstacle& o)
 		}
 		if (dir == RIGHT && o.index == 1) {
 			o.index = 0;
+		}
+		break;
+	}
+	case MARIO_END: {
+		if (type == MARIO) {
+			isEnd = true;
+		}
+		break;
+	}
+	case LUIGI_END: {
+		if (type == LUIGI) {
+			isEnd = true;
 		}
 		break;
 	}

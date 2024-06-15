@@ -12,11 +12,20 @@ public:
 
 	Obstacle switchStick;
 	Obstacle switchElevator;
+	Obstacle buttonDown;
+	Obstacle buttonUp;
+	Obstacle buttonElevator;
+	Obstacle box;
+
+	int timeM;
+	int timeS;
 
 public:
 	void InitPlayer();
 	void InitObstacles();
 	void CollisionCheck();
+	void GameEnd();
+	void DrawTime(HDC hDC);
 public:
 	virtual ~EasyGameScene() override;
 	virtual void Init() override;

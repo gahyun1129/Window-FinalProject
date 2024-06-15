@@ -133,6 +133,7 @@
     <ClCompile Include="EasyGameScene.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="GameFramework.cpp" />
+    <ClCompile Include="HardGameScene.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="EasyGameScene.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="GameFramework.h" />
+    <ClInclude Include="HardGameScene.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />

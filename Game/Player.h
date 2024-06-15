@@ -31,6 +31,8 @@ public:
 
 	TYPE type;
 
+	bool isEnd;
+
 public:
 	void Move();
 	void PlayAnimation();
