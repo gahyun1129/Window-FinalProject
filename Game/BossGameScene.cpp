@@ -224,11 +224,11 @@ void BossGameScene::Draw(HDC hDC)
 	//// Player /////
 	mario->img.Draw(hDC, mario->position.x + 100, mario->position.y,
 		mario->imgWidth, mario->imgHeight,
-		mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->amimIndex,
+		mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->animIndex,
 		mario->imgWidth, mario->imgHeight);
 	luigi->img.Draw(hDC, luigi->position.x, luigi->position.y,
 		luigi->imgWidth, luigi->imgHeight,
-		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->amimIndex,
+		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->animIndex,
 		luigi->imgWidth, luigi->imgHeight);
 
 	//// Boss ////

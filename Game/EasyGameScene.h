@@ -8,7 +8,12 @@ public:
 
 	CImage backgroud;
 
-	
+	vector<Obstacle> obs;
+
+public:
+	void InitPlayer();
+	void InitObstacles();
+	void CollisionCheck();
 public:
 	virtual ~EasyGameScene() override;
 	virtual void Init() override;

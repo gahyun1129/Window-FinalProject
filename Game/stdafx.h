@@ -37,6 +37,7 @@ using namespace std::chrono;
 #include "Camera.h"
 #include "Boss.h"
 #include "FireBall.h"
+#include "Obstacle.h"
 #include "Player.h"
 #include "Scene.h"
 #include "BossGameScene.h"

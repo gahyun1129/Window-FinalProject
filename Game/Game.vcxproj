@@ -135,6 +135,7 @@
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="LobbyScene.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="stdafx.h" />
