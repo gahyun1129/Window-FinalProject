@@ -456,8 +456,6 @@ void EasyGameScene::Draw(HDC hDC)
 	DrawTime(hDC);
 }
 
-
-
 void EasyGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMessage)
