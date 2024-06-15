@@ -34,7 +34,7 @@ public:
 public:
 	void Move();
 	void PlayAnimation();
-	void CheckWithWall(Obstacle o);
+	void CheckWithWall(Obstacle& o);
 	void CheckFloor();
 };
 

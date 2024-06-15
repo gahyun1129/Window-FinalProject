@@ -161,12 +161,27 @@ void EasyGameScene::InitObstacles()
 
 	////////////////////////////////////////////////////////
 
-	o.size = { 250, 570, 274, 599 };
+	o.size = { 225, 570, 297, 599 };
 	o.type = SWITCHSTICK;
 	obs.push_back(o); // 30
 
-	switchStick.size = { 250, 570, 274, 599 };
+	switchStick.size = { 225, 570, 297, 599 };
 	switchStick.img.Load(L"image/key.png");
+
+	////////////////////////////////////////////////////////
+
+	o.size = { 35, 450, 120, 475 };
+	o.type = WALL_TOP;
+	o.minLv = 450;
+	o.maxLv = 530;
+	obs.push_back(o); // 31
+
+	switchElevator.size = { 35, 450, 120, 475 };
+	switchElevator.img.Load(L"image/elevator.png");
+	switchElevator.minLv = 450;
+	switchElevator.maxLv = 530;
+
+
 }
 
 void EasyGameScene::CollisionCheck()
@@ -175,24 +190,43 @@ void EasyGameScene::CollisionCheck()
 	RECT luigiR = {luigi->position.x, luigi->position.y, luigi->position.x + luigi->imgWidth, luigi->position.y + luigi->imgHeight};
 	RECT tmp;
 
-	for (const Obstacle& o : obs) {
+	for (Obstacle& o : obs) {
 		if (IntersectRect(&tmp, &marioR, &o.size)) {
 			mario->CheckWithWall(o);
 			if (o.type == SWITCHSTICK) {
 				switchStick.index = o.index;
+				if (switchStick.index == 1) {
+					switchElevator.isUp = false;
+					switchElevator.isDown = true;
+					obs[31].isUp = false;
+					obs[31].isDown = true;
+				}
+				else if (switchStick.index == 0) {
+					switchElevator.isUp = true;
+					switchElevator.isDown = false;
+					obs[31].isUp = true;
+					obs[31].isDown = false;
+				}
 			}
 			break;
 		}
 	}
-	for (const Obstacle& o : obs) {
+	for (Obstacle& o : obs) {
 		if (IntersectRect(&tmp, &luigiR, &o.size)) {
 			luigi->CheckWithWall(o);
 			if (o.type == SWITCHSTICK) {
-				if (luigi->dir == LEFT && switchStick.index == 0) {
-					switchStick.index = 1;
+				switchStick.index = o.index;
+				if (switchStick.index == 1) {
+					switchElevator.isUp = false;
+					switchElevator.isDown = true;
+					obs[31].isUp = false;
+					obs[31].isDown = true;
 				}
-				if (luigi->dir == RIGHT && switchStick.index == 1) {
-					switchStick.index = 0;
+				else if (switchStick.index == 0) {
+					switchElevator.isUp = true;
+					switchElevator.isDown = false;
+					obs[31].isUp = true;
+					obs[31].isDown = false;
 				}
 			}
 			break;
@@ -227,6 +261,9 @@ void EasyGameScene::Update(const float frameTime)
 	luigi->PlayAnimation();
 
 	CollisionCheck();
+
+	switchElevator.MoveElevator();
+	obs[31].MoveElevator();
 }
 
 void EasyGameScene::Draw(HDC hDC)
@@ -245,7 +282,8 @@ void EasyGameScene::Draw(HDC hDC)
 		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
 	}
 
-	switchStick.img.Draw(hDC, switchStick.size.left, switchStick.size.top, 24, 29, 24 * switchStick.index, 0, 24, 29);
+	switchStick.img.Draw(hDC, switchStick.size.left, switchStick.size.top, 72, 29, 72 * switchStick.index, 0, 72, 29);
+	switchElevator.img.Draw(hDC, switchElevator.size.left, switchElevator.size.top, 85, 20, 0, 0, 85, 20);
 }
 
 

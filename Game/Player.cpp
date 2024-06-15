@@ -56,7 +56,7 @@ void Player::PlayAnimation()
 	}
 }
 
-void Player::CheckWithWall(Obstacle o)
+void Player::CheckWithWall(Obstacle& o)
 {
 	switch (o.type)
 	{

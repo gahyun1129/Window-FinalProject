@@ -11,6 +11,7 @@ public:
 	vector<Obstacle> obs;
 
 	Obstacle switchStick;
+	Obstacle switchElevator;
 
 public:
 	void InitPlayer();
