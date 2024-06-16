@@ -131,9 +131,11 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossGameScene.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="EasyGameScene.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="GameFramework.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="HardGameScene.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -148,10 +150,12 @@
     <ClInclude Include="Boss.h" />
     <ClInclude Include="BossGameScene.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ClearScene.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="EasyGameScene.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="GameFramework.h" />
+    <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="HardGameScene.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Obstacle.h" />
