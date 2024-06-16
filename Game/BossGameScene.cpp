@@ -81,6 +81,39 @@ void BossGameScene::Update(const float frameTime)
 	auto currTime = chrono::high_resolution_clock::now();
 	chrono::duration<double> elapsed = currTime - startTime;
 
+	//// 엔딩 ////
+	if (mario->life == 0 && luigi->life == 0)
+	{
+		if (gameEndingTime == -1)
+		{
+			gameEndingTime = (int)elapsed.count();
+		}
+		else if (gameEndingTime <= (int)elapsed.count())
+		{
+			Scene* scene = Framework.CurScene;   // 현재 씬을 tmp에 넣고 지워줌
+			Framework.CurScene = new GameOverScene;
+			Framework.CurScene->Init();
+			Framework.SceneIndex = OVER;
+			delete scene;
+		}
+		return;
+	}
+	else if (boss->hp <= 0)
+	{
+		if (gameEndingTime == -1)
+		{
+			gameEndingTime = (int)elapsed.count();
+		}
+		else if (gameEndingTime <= (int)elapsed.count())
+		{
+			Scene* scene = Framework.CurScene;   // 현재 씬을 tmp에 넣고 지워줌
+			Framework.CurScene = new ClearScene;
+			Framework.CurScene->Init();
+			Framework.SceneIndex = CLEAR;
+			delete scene;
+		}
+		return;
+	}
 	//// Camera Moving ////
 	vector<float> positionXs;
 	positionXs.push_back(mario->position.x);
@@ -100,7 +133,6 @@ void BossGameScene::Update(const float frameTime)
 			}
 		}
 	}
-
 	//// Update Player ////
 	if (mario->life > 0)
 	{

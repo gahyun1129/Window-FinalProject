@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum SCENELIST { LOBBY, EASY, NORMAL, HARD, HERO, END };
+enum SCENELIST { LOBBY, EASY, NORMAL, HARD, HERO, END, OVER, CLEAR};
 class GameFramework
 {
 public:

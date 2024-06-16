@@ -27,6 +27,7 @@ public:
 	int prevAttackTime;		// 직전 공격 시각(초)
 	int prevSkillTime;
 	int prevParticleTime;
+	int gameEndingTime = -1;
 public:
 	virtual ~BossGameScene() override;
 	virtual void Init() override;

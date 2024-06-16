@@ -152,6 +152,36 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			DeleteDC(endDC);
 			DeleteObject(hBitmap);
 		}
+		else if (Framework.SceneIndex == OVER) {
+			endDC = CreateCompatibleDC(mainDC);
+			hBitmap = CreateCompatibleBitmap(mainDC, rt.right, rt.bottom);
+
+			SelectObject(endDC, (HBITMAP)hBitmap);
+
+			SetBkColor(endDC, RGB(150, 150, 150));
+			Rectangle(endDC, 0, 300, rt.right + 200, rt.bottom - 150);
+
+			Framework.OnDraw(endDC);
+
+			BitBlt(mainDC, 0, 0, rt.right, rt.bottom, endDC, Framework.mainCamera->pos.x, Framework.mainCamera->pos.y, SRCCOPY);
+			DeleteDC(endDC);
+			DeleteObject(hBitmap);
+		}
+		else if (Framework.SceneIndex == CLEAR) {
+			endDC = CreateCompatibleDC(mainDC);
+			hBitmap = CreateCompatibleBitmap(mainDC, rt.right, rt.bottom);
+
+			SelectObject(endDC, (HBITMAP)hBitmap);
+
+			SetBkColor(endDC, RGB(150, 150, 150));
+			Rectangle(endDC, 0, 300, rt.right + 200, rt.bottom - 150);
+
+			Framework.OnDraw(endDC);
+
+			BitBlt(mainDC, 0, 0, rt.right, rt.bottom, endDC, Framework.mainCamera->pos.x, Framework.mainCamera->pos.y, SRCCOPY);
+			DeleteDC(endDC);
+			DeleteObject(hBitmap);
+			}
 
 		EndPaint(hWnd, &ps);
 		break;
