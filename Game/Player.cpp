@@ -1,22 +1,25 @@
 #include "stdafx.h"
+#include "Player.h"
+
+extern GameFramework Framework;
 
 void Player::Move()
 {
 	if (isLeft) {
 		position.x -= 7;
-		if (position.x <= 0) {
+		if (position.x <= Framework.mainCamera->pos.x) {
 			position.x += 7;
 		}
-		if (position.x <= leftMax) {
+		if (position.x <= leftMax + Framework.mainCamera->pos.x) {
 			isFalling = true;
 		}
 	}
 	else if (isRight) {
 		position.x += 7;
-		if (position.x + imgWidth >= 1070) {
+		if (position.x + imgWidth >= 1070 + Framework.mainCamera->pos.x) {
 			position.x -= 7;
 		}
-		if (position.x + imgWidth >= rightMax) {
+		if (position.x + imgWidth >= rightMax + Framework.mainCamera->pos.x) {
 			isFalling = true;
 		}
 	}
@@ -138,5 +141,13 @@ void Player::CheckFloor()
 	if(isFalling)
 	{
 		position.y += 9;
+	}
+}
+
+void Player::DyingUpdate()
+{
+	if (position.y >= 0) {
+		vy += GRAVITY;
+		position.y += vy;
 	}
 }

@@ -3,7 +3,9 @@ class BossGameScene : public Scene
 {
 
 public:
-	CImage floorImg;
+	CImage marioImage;
+	CImage luigiImage;
+	CImage lifeImage;
 
 	Player* mario;
 	Player* luigi;
@@ -17,8 +19,7 @@ public:
 	vector<Particle*> particles;
 
 	CImage background;
-
-	float drawSceneX = 0;
+	CImage cloud;
 
 	// Timer
 	chrono::high_resolution_clock::time_point startTime;
@@ -35,7 +36,8 @@ public:
 
 private:
 	void AddFireBall();
-	void AddParticle();
+	void AddRay();
 	void DrawBossHP(HDC hDC, const int hp);
+	void DrawPlayerHP(HDC hDC);
 };
 

@@ -3,6 +3,7 @@ class Camera
 {
 public:
 	POINT pos = { 0, 0 };
+	POINT tempPos = { 0, 0 };
 	int offset = 20;
 	int degree = 10;
 

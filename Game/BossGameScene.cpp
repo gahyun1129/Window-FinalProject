@@ -20,11 +20,13 @@ void BossGameScene::Init()
 {
 	//// Init Scene ////
 	background.Load(L"Image/Stage-ground.png");
+	cloud.Load(L"Image/clouds.png");
 	startTime = chrono::high_resolution_clock::now();
 	prevJumpingTime = -1;
 
-	floorImg.Load(L"Image/floorblock.png");
-	drawSceneX = 0;
+	marioImage.Load(L"Image/mario_image.png");
+	luigiImage.Load(L"Image/luigi_image.png");
+	lifeImage.Load(L"Image/life.png");
 
 	//// Init Player ////
 	mario = new Player;
@@ -90,34 +92,58 @@ void BossGameScene::Update(const float frameTime)
 		float sceneCenterX = *minElement + (*maxElement - *minElement) / 2.f;
 		float gapX = sceneCenterX - Framework.size.right / 2;
 		if (gapX > 0) {
-			if (drawSceneX + 800 <= 1986) {
-				drawSceneX = gapX;
-				//Framework.mainCamera->pos.x = gapX;
+			if (Framework.mainCamera->pos.x < 600) {
+				Framework.mainCamera->pos.x = gapX;
+			}
+			else {
+
 			}
 		}
 	}
 
 	//// Update Player ////
-	mario->Move();
-	luigi->Move();
+	if (mario->life > 0)
+	{
+		mario->Move();
 
-	mario->CheckFloor();
-	luigi->CheckFloor();
+		mario->CheckFloor();
 
-	mario->PlayAnimation();
-	luigi->PlayAnimation();
+		mario->PlayAnimation();
+	}
+	else
+	{
+		mario->isDying = true;
+		mario->DyingUpdate();
+	}
+	if (luigi->life > 0)
+	{
+		luigi->Move();
 
+		luigi->CheckFloor();
+
+		luigi->PlayAnimation();
+	}
+	else
+	{
+		luigi->isDying = true;
+		luigi->DyingUpdate();
+	}
+
+	//// Update Balls ////	
 	for (auto it = balls.begin(); it != balls.end(); )
 	{
 		auto b = *it;
+		// Ball <-> Boss
 		RECT ballR = { b->position.x - b->halfSize, b->position.y - b->halfSize, b->position.x + b->halfSize, b->position.y + b->halfSize };
 		RECT bossR = { boss->position.x, boss->position.y, boss->position.x + boss->offsetX, boss->position.y + boss->offsetY };
 		RECT intersection;
 		if (IntersectRect(&intersection, &ballR, &bossR)) {
 			b->vx = 0;
 			boss->hp -= 20;
-			if (boss->hp <= 0)
+			if (boss->hp <= 0) {
+				boss->hp = 0;
 				boss->isDying = true;
+			}
 		}
 
 		if (b->startTime == -1) {
@@ -153,12 +179,13 @@ void BossGameScene::Update(const float frameTime)
 			prevAttackTime = (int)elapsed.count();
 		}
 
+		// 보스의 skillTerm(초)마다 Ray 생성
 		if ((int)elapsed.count() % boss->skillTerm == 0 && (int)elapsed.count() > prevSkillTime)
 		{
-			Ray* newRay = new Ray;
-			newRay->positionX = 100;
-			newRay->width = 40;
-			ray.push_back(newRay);
+			for (int i = 0; i < 3; i++)
+			{
+				AddRay();
+			}
 			prevSkillTime = (int)elapsed.count();
 			Framework.mainCamera->isShake = true;
 		}
@@ -183,7 +210,7 @@ void BossGameScene::Update(const float frameTime)
 		}
 		else {
 			fb->position.x += fb->velocity;
-			if (fb->position.x > 1100)
+			if (fb->position.x > Framework.size.right + Framework.mainCamera->pos.x)
 				fb->velocity = 0;
 		}
 
@@ -194,9 +221,11 @@ void BossGameScene::Update(const float frameTime)
 		RECT intersection;
 		if (IntersectRect(&intersection, &marioR, &fireR)) {
 			fb->velocity = 0;
+			mario->life--;
 		}
 		if (IntersectRect(&intersection, &luigiR, &fireR)) {
 			fb->velocity = 0;
+			luigi->life--;
 		}
 
 		if (fb->imgIndex == 0) {
@@ -247,6 +276,7 @@ void BossGameScene::Update(const float frameTime)
 					newParticle->prevTime = (int)elapsed.count();
 					particles.push_back(newParticle);
 				}
+				mario->life--;
 			}
 			if (IntersectRect(&intersection, &luigiR, &rayR)) {
 				for (int i = 0; i < 3; i++)
@@ -257,6 +287,7 @@ void BossGameScene::Update(const float frameTime)
 					newParticle->prevTime = (int)elapsed.count();
 					particles.push_back(newParticle);
 				}
+				luigi->life--;
 			}
 			it = ray.erase(it);
 		}
@@ -275,10 +306,12 @@ void BossGameScene::Draw(HDC hDC)
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	hPen = CreatePen(PS_SOLID, 1, RGB(10, 10, 10));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
-	Rectangle(hDC, Framework.size.left, Framework.size.top, Framework.size.right, Framework.size.bottom);
+	Rectangle(hDC, Framework.size.left, Framework.size.top, Framework.size.right + Framework.mainCamera->pos.x, Framework.size.bottom);
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
-	background.Draw(hDC, 0, 0, 1986, Framework.size.bottom, 0, 0, 1986, 600);
+	background.Draw(hDC, 0, 0, Framework.size.right + Framework.mainCamera->pos.x, Framework.size.bottom, 0, Framework.mainCamera->pos.y, 800 + Framework.mainCamera->pos.x, 600);
+	cloud.Draw(hDC, 0, 100, Framework.size.right + Framework.mainCamera->pos.x, 100, 0, Framework.mainCamera->pos.y, 300 + Framework.mainCamera->pos.x, 104);
+	DrawPlayerHP(hDC);
 
 	//floorImg.Draw(hDC, mario->position.x, mario->position.y,
 	//	mario->imgWidth, mario->imgHeight,
@@ -287,7 +320,7 @@ void BossGameScene::Draw(HDC hDC)
 
 	// 플레이어 충돌 박스
 	RECT marioR = { mario->position.x, mario->position.y, mario->position.x + mario->imgWidth, mario->position.y + mario->imgHeight };
-	RECT luigiR = { luigi->position.x , luigi->position.y, luigi->position.x + luigi->imgWidth, luigi->position.y + luigi->imgHeight };
+	RECT luigiR = { luigi->position.x, luigi->position.y, luigi->position.x + luigi->imgWidth, luigi->position.y + luigi->imgHeight };
 	hBrush = CreateSolidBrush(RGB(255, 255, 255));
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	Rectangle(hDC, marioR.left, marioR.top, marioR.right, marioR.bottom);
@@ -393,6 +426,20 @@ void BossGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 			luigi->isRight = true;
 			luigi->animIndex = 1;
 		}
+		else if (wParam == VK_M) {
+			Ball* newBall = new Ball;
+			POINT newP;
+			if (luigi->dir == LEFT) {
+				newP.x = luigi->position.x;
+				newP.y = luigi->position.y + luigi->imgHeight / 2;
+			}
+			else {
+				newP.x = luigi->position.x + luigi->imgWidth;
+				newP.y = luigi->position.y + luigi->imgHeight / 2;
+			}
+			newBall->Init(newP, luigi->dir, -1);
+			balls.push_back(newBall);
+		}
 		break;
 	}
 	case WM_LBUTTONDOWN: {
@@ -437,11 +484,24 @@ void BossGameScene::AddFireBall()
 	else {
 		newFireBall->position.x = boss->position.x + 100;
 	}
-	newFireBall->position.y = boss->position.y;
+	newFireBall->position.y = boss->position.y + 30;
 
 	newFireBall->velocity = 10;
 
 	fireBalls.push_back(newFireBall);
+}
+
+void BossGameScene::AddRay()
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	static std::uniform_real_distribution<> disX(Framework.size.left + Framework.mainCamera->pos.x, Framework.size.right + Framework.mainCamera->pos.x);
+	static std::uniform_real_distribution<> disW(30, 50);
+
+	Ray* newRay = new Ray;
+	newRay->positionX = disX(gen);
+	newRay->width = disW(gen);
+	ray.push_back(newRay);
 }
 
 void BossGameScene::DrawBossHP(HDC hDC, const int hp)
@@ -456,7 +516,7 @@ void BossGameScene::DrawBossHP(HDC hDC, const int hp)
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
-	RoundRect(hDC, Framework.size.right / 8 * 2, Framework.size.top + 15, Framework.size.right / 8 * 2 + hpWidth, Framework.size.top + 15 + 20, 20, 20);
+	RoundRect(hDC, Framework.size.right / 8 * 2 + Framework.mainCamera->pos.x, Framework.size.top + 15, Framework.size.right / 8 * 2 + hpWidth + Framework.mainCamera->pos.x, Framework.size.top + 15 + 20, 20, 20);
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
 
@@ -464,7 +524,47 @@ void BossGameScene::DrawBossHP(HDC hDC, const int hp)
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	hPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
-	RoundRect(hDC, Framework.size.right / 8 * 2, Framework.size.top + 15, Framework.size.right / 8 * 2 + currHpWidth, Framework.size.top + 15 + 20, 20, 20);
+	RoundRect(hDC, Framework.size.right / 8 * 2 + Framework.mainCamera->pos.x, Framework.size.top + 15, Framework.size.right / 8 * 2 + currHpWidth + Framework.mainCamera->pos.x, Framework.size.top + 15 + 20, 20, 20);
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
+}
+
+void BossGameScene::DrawPlayerHP(HDC hDC)
+{
+	HBRUSH hBrush, oldBrush;
+	HPEN hPen, oldPen;
+
+	float imageSize = 80;
+	float lifeSize = 40;
+	float drawY = 70;
+
+	// mario
+	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	oldPen = (HPEN)SelectObject(hDC, hPen);
+	RoundRect(hDC, Framework.mainCamera->pos.x, drawY, imageSize + Framework.mainCamera->pos.x, drawY + imageSize, 10, 10);
+	DeleteObject(hBrush);
+	DeleteObject(hPen);
+	marioImage.Draw(hDC, Framework.mainCamera->pos.x, drawY, imageSize, imageSize, 0, 0, 1682, 1682);
+
+	for (int i = 0; i < mario->life; i++)
+	{
+		lifeImage.Draw(hDC, imageSize + 10 + lifeSize * i + Framework.mainCamera->pos.x, drawY + imageSize / 2 - lifeSize / 2, lifeSize, lifeSize, 0, 0, 120, 120);
+	}
+	
+	// luigi
+	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	oldPen = (HPEN)SelectObject(hDC, hPen);
+	RoundRect(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize, drawY, Framework.size.right + Framework.mainCamera->pos.x, drawY + imageSize, 10, 10);
+	DeleteObject(hBrush);
+	DeleteObject(hPen);
+	luigiImage.Draw(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize, drawY, imageSize, imageSize, 0, 0, 1494, 1494);
+
+	for (int i = 0; i < luigi->life; i++)
+	{
+		lifeImage.Draw(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize - 10 - lifeSize * i - lifeSize, drawY + imageSize / 2 - lifeSize / 2, lifeSize, lifeSize, 0, 0, 120, 120);
+	}
 }

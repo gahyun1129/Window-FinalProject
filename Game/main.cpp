@@ -109,7 +109,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		else if (Framework.SceneIndex == HARD) {
 			hardDC = CreateCompatibleDC(mainDC);
-			hBitmap = CreateCompatibleBitmap(mainDC, rt.right, rt.bottom);
+			hBitmap = CreateCompatibleBitmap(mainDC, rt.right + Framework.mainCamera->pos.x, rt.bottom);
 
 			SelectObject(hardDC, (HBITMAP)hBitmap);
 
@@ -118,7 +118,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			Framework.OnDraw(hardDC);
 
-			BitBlt(mainDC, 0, 0, rt.right, rt.bottom, hardDC, Framework.mainCamera->pos.x, Framework.mainCamera->pos.y, SRCCOPY);
+			BitBlt(mainDC, 0, 0, rt.right + Framework.mainCamera->pos.x, rt.bottom, hardDC, Framework.mainCamera->pos.x, Framework.mainCamera->pos.y, SRCCOPY);
 			DeleteDC(hardDC);
 			DeleteObject(hBitmap);
 		}
