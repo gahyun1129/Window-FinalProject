@@ -351,12 +351,12 @@ void BossGameScene::Draw(HDC hDC)
 	//	mario->imgWidth, mario->imgHeight);
 
 	// 플레이어 충돌 박스
-	RECT marioR = { mario->position.x, mario->position.y, mario->position.x + mario->imgWidth, mario->position.y + mario->imgHeight };
+	/*RECT marioR = { mario->position.x, mario->position.y, mario->position.x + mario->imgWidth, mario->position.y + mario->imgHeight };
 	RECT luigiR = { luigi->position.x, luigi->position.y, luigi->position.x + luigi->imgWidth, luigi->position.y + luigi->imgHeight };
 	hBrush = CreateSolidBrush(RGB(255, 255, 255));
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	Rectangle(hDC, marioR.left, marioR.top, marioR.right, marioR.bottom);
-	DeleteObject(hBrush);
+	DeleteObject(hBrush);*/
 
 	//// Ray ////
 	for (const auto r : ray)

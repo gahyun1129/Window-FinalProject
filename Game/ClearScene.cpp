@@ -20,15 +20,15 @@ void ClearScene::Draw(HDC hDC)
 	//// Scene ////
 	HBRUSH hBrush, oldBrush;
 	HPEN hPen, oldPen;
-	hBrush = CreateSolidBrush(RGB(100, 100, 100));
+	hBrush = CreateSolidBrush(RGB(10, 10, 10));
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
-	hPen = CreatePen(PS_SOLID, 1, RGB(100, 100, 100));
+	hPen = CreatePen(PS_SOLID, 1, RGB(10, 10, 10));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
 	Rectangle(hDC, Framework.size.left, Framework.size.top, Framework.size.right, Framework.size.bottom);
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
 	EndingImage.Draw(hDC, (Framework.size.right - Framework.size.bottom) / 2, 0, Framework.size.bottom, Framework.size.bottom, 0, 0, 500, 500);
-	
+
 	HFONT hFont, oldFont;
 	hFont = CreateFont(
 		30,                   // ≥Ù¿Ã
