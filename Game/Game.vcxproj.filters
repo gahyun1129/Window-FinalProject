@@ -37,6 +37,12 @@
     <Filter Include="헤더 파일\Object">
       <UniqueIdentifier>{ec62f855-3ae3-47f6-96fa-0a77171d6079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Boss">
+      <UniqueIdentifier>{aaa09596-4426-4fb3-b78d-a791f3a6760e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Boss">
+      <UniqueIdentifier>{90b17e2f-9cd1-4fc2-b9ab-65eee4b2b53e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,20 +66,29 @@
     <ClCompile Include="EasyGameScene.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>소스 파일\Player</Filter>
-    </ClCompile>
     <ClCompile Include="BossGameScene.cpp">
       <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBall.cpp">
-      <Filter>소스 파일\Player</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
     <ClCompile Include="HardGameScene.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>소스 파일\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Ray.cpp">
+      <Filter>소스 파일\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>소스 파일\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>소스 파일\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,17 +119,26 @@
     <ClInclude Include="BossGameScene.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>헤더 파일\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBall.h">
-      <Filter>헤더 파일\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Obstacle.h">
       <Filter>헤더 파일\Object</Filter>
     </ClInclude>
     <ClInclude Include="HardGameScene.h">
       <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>헤더 파일\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>헤더 파일\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>헤더 파일\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>헤더 파일\Boss</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

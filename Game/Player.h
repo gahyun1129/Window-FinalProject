@@ -34,12 +34,21 @@ public:
 	TYPE type;
 
 	bool isEnd;
+public:
+	int life = 5;
+
+	bool isDying = false;
+	const float GRAVITY = 1.0f;
+	const float BOUNCE_FACTOR = 0.7f;
+	float vy = -10;
 
 public:
 	void Move();
 	void PlayAnimation();
 	void CheckWithWall(Obstacle& o);
 	void CheckFloor();
+
+	void DyingUpdate();
 	void Flying();
 };
 

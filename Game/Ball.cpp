@@ -31,8 +31,8 @@ void Ball::Update()
         vy *= -BOUNCE_FACTOR;
     }
 
-    if (position.x > Framework.size.right) {
-        position.x = Framework.size.right;
+    if (position.x > Framework.size.right + Framework.mainCamera->pos.x) {
+        position.x = Framework.size.right + Framework.mainCamera->pos.x;
         vx *= -BOUNCE_FACTOR;
     }
 

@@ -10,8 +10,11 @@ void Camera::ShakeCam(float time)
 			if (num < 0) {
 				isShake = false;
 				num = 4;
-				pos = { 0, 0 };
+				pos = tempPos;
 			}
 		}
+	}
+	else {
+		tempPos = pos;
 	}
 }
