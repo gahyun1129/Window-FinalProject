@@ -68,7 +68,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 			SelectObject(memDC, (HBITMAP)hBitmap);
 
-			SetBkColor(memDC, RGB(100, 100, 100));
+			SetBkColor(memDC, RGB(0, 0, 0));
 			Rectangle(memDC, 0, 0, rt.right, rt.bottom);
 
 			Framework.OnDraw(memDC);

@@ -1,6 +1,11 @@
 #pragma once
 class LobbyScene : public Scene
 {
+
+	CImage background, titleText;
+	int title_index = 0;
+	int title_coolTime = 0;
+	Player* p1;
 public:
 	virtual ~LobbyScene() override;
 	virtual void Init() override;
