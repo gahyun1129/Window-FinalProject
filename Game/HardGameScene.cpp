@@ -221,7 +221,38 @@ void HardGameScene::InitObstacles()
 	o.type = LUIGI;
 	obs.push_back(o);
 
-	///////////////////////////////////////////////////
+}
+
+void HardGameScene::InitHearts()
+{
+	mario_life.Load(L"Image/mario_life.png");
+	luigi_life.Load(L"Image/luigi_life.png");
+
+	Obstacle o;
+
+	o.size = { 300, 785, 330, 820 };
+	o.type = MARIO_HEART;
+	hearts.push_back(o);
+
+	o.size = { 750, 785, 780, 820 };
+	o.type = LUIGI_HEART;
+	hearts.push_back(o);
+
+	o.size = { 650, 620, 680, 655 };
+	o.type = LUIGI_HEART;
+	hearts.push_back(o);
+
+	o.size = { 400, 620, 430, 655 };
+	o.type = MARIO_HEART;
+	hearts.push_back(o);
+
+	o.size = { 340, 345, 370, 380 };
+	o.type = MARIO_HEART;
+	hearts.push_back(o);
+
+	o.size = { 725, 345, 775, 380 };
+	o.type = LUIGI_HEART;
+	hearts.push_back(o);
 }
 
 void HardGameScene::CollisionCheck()
@@ -236,6 +267,23 @@ void HardGameScene::CollisionCheck()
 		}
 		if (IntersectRect(&tmp, &luigiR, &o.size)) {
 			luigi->CheckWithWall(o);
+		}
+	}
+
+	for (int i = 0; i < hearts.size(); ++i) {
+		if (IntersectRect(&tmp, &marioR, &hearts[i].size)) {
+			if (hearts[i].type == MARIO_HEART) {
+				mario->CheckHearts(hearts[i]);
+				hearts.erase(hearts.begin() + i);
+			}
+			break;
+		}
+		if (IntersectRect(&tmp, &luigiR, &hearts[i].size)) {
+			if (hearts[i].type == LUIGI_HEART) {
+				luigi->CheckHearts(hearts[i]);
+				hearts.erase(hearts.begin() + i);
+			}
+			break;
 		}
 	}
 }
@@ -299,6 +347,7 @@ void HardGameScene::Init()
 
 	InitPlayer();
 	InitObstacles();
+	InitHearts();
 }
 
 void HardGameScene::Update(const float frameTime)
@@ -329,6 +378,17 @@ void HardGameScene::Draw(HDC hDC)
 		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
 	}
 
+	for (const Obstacle& o : hearts) {
+		if (o.type == LUIGI_HEART) {
+			luigi_life.Draw(hDC, o.size.left, o.size.top, 30, 34, 0, 0, 30, 34);
+		}
+		else {
+			mario_life.Draw(hDC, o.size.left, o.size.top, 30, 34, 0, 0, 30, 34);
+		}
+	}
+
+	DrawTime(hDC);
+
 	mario->img.Draw(hDC, mario->position.x, mario->position.y,
 		mario->imgWidth, mario->imgHeight,
 		mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->animIndex,
@@ -339,8 +399,6 @@ void HardGameScene::Draw(HDC hDC)
 		luigi->imgWidth, luigi->imgHeight);
 
 
-
-	DrawTime(hDC);
 }
 
 void HardGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)

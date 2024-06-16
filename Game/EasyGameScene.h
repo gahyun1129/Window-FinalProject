@@ -6,9 +6,10 @@ public:
 	Player* mario;
 	Player* luigi;
 
-	CImage backgroud;
+	CImage backgroud, mario_life, luigi_life;
 
 	vector<Obstacle> obs;
+	vector<Obstacle> hearts;
 
 	Obstacle switchStick;
 	Obstacle switchElevator;
@@ -23,6 +24,7 @@ public:
 public:
 	void InitPlayer();
 	void InitObstacles();
+	void InitHearts();
 	void CollisionCheck();
 	void GameEnd();
 	void DrawTime(HDC hDC);

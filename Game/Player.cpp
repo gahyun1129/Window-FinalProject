@@ -108,17 +108,20 @@ void Player::CheckWithWall(Obstacle& o)
 	}
 	case MARIO: {
 		if (type == LUIGI) {
+			life -= 1;
 			position = spawnPoint;
 		}
 		break;
 	}	
 	case LUIGI: {
 		if (type == MARIO) {
+			life - 1;
 			position = spawnPoint;
 		}
 		break;
 	}
 	case BOTH: {
+		life - 1;
 		position = spawnPoint;
 		break;
 	}
@@ -152,6 +155,40 @@ void Player::CheckWithWall(Obstacle& o)
 		}
 		else {
 			animIndex = 3;
+		}
+		break;
+	}
+	case LUIGI_HEART: {
+		life += 1;
+		if (life >= 5) {
+			life = 5;
+		}
+		break;
+	}
+	}
+}
+
+void Player::CheckHearts(Obstacle& o)
+{
+	switch (o.type)
+	{
+	case LUIGI_HEART: {
+		if ( type == LUIGI)
+		{
+			life += 1;
+			if (life >= 5) {
+				life = 5;
+			}
+		}
+		break;
+	}
+	case MARIO_HEART: {
+		if (type == MARIO)
+		{
+			life += 1;
+			if (life >= 5) {
+				life = 5;
+			}
 		}
 		break;
 	}

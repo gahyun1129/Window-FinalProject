@@ -46,6 +46,7 @@ public:
 	void Move();
 	void PlayAnimation();
 	void CheckWithWall(Obstacle& o);
+	void CheckHearts(Obstacle& o);
 	void CheckFloor();
 
 	void DyingUpdate();

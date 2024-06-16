@@ -250,6 +250,30 @@ void EasyGameScene::InitObstacles()
 	obs.push_back(o);
 }
 
+void EasyGameScene::InitHearts()
+{
+	mario_life.Load(L"Image/mario_life.png");
+	luigi_life.Load(L"Image/luigi_life.png");
+
+	Obstacle o;
+
+	o.size = { 555, 750, 585, 785 };
+	o.type = LUIGI_HEART;
+	hearts.push_back(o);	
+	
+	o.size = { 780, 750, 810, 785 };
+	o.type = MARIO_HEART;
+	hearts.push_back(o);
+
+	o.size = { 50, 150, 80, 185 };
+	o.type = LUIGI_HEART;
+	hearts.push_back(o);
+
+	o.size = { 100, 150, 130, 185 };
+	o.type = MARIO_HEART;
+	hearts.push_back(o);
+}
+
 void EasyGameScene::CollisionCheck()
 {
 	RECT marioR = {mario->position.x, mario->position.y, mario->position.x + mario->imgWidth, mario->position.y + mario->imgHeight};
@@ -296,8 +320,6 @@ void EasyGameScene::CollisionCheck()
 				obs[34].isDown = true;
 			}
 		}
-	}
-	for (Obstacle& o : obs) {
 		if (IntersectRect(&tmp, &luigiR, &o.size)) {
 			luigi->CheckWithWall(o);
 			if (o.type == SWITCHSTICK) {
@@ -329,6 +351,22 @@ void EasyGameScene::CollisionCheck()
 				obs[34].isUp = false;
 				obs[34].isDown = true;
 			}
+		}
+	}
+	for (int i = 0; i < hearts.size(); ++i) {
+		if (IntersectRect(&tmp, &marioR, &hearts[i].size)) {
+			if (hearts[i].type == MARIO_HEART) {
+				mario->CheckHearts(hearts[i]);
+				hearts.erase(hearts.begin() + i);
+			}
+			break;
+		}
+		if (IntersectRect(&tmp, &luigiR, &hearts[i].size)) {
+			if (hearts[i].type == LUIGI_HEART) {
+				luigi->CheckHearts(hearts[i]);
+				hearts.erase(hearts.begin() + i);
+			}
+			break;
 		}
 	}
 }
@@ -391,7 +429,7 @@ void EasyGameScene::Init()
 
 	InitPlayer();
 	InitObstacles();
-
+	InitHearts();
 }
 
 void EasyGameScene::Update(const float frameTime)
@@ -422,14 +460,7 @@ void EasyGameScene::Update(const float frameTime)
 void EasyGameScene::Draw(HDC hDC)
 {
 	backgroud.Draw(hDC, 0, 0, Framework.size.right, Framework.size.bottom, 0, 0, 800, 600);
-	mario->img.Draw(hDC, mario->position.x, mario->position.y, 
-						mario->imgWidth, mario->imgHeight, 
-						mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->animIndex,
-						mario->imgWidth, mario->imgHeight);
-	luigi->img.Draw(hDC, luigi->position.x, luigi->position.y,
-		luigi->imgWidth, luigi->imgHeight,
-		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->animIndex,
-		luigi->imgWidth, luigi->imgHeight);
+
 
 	//for (Obstacle o : obs) {
 	//	Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
@@ -456,7 +487,26 @@ void EasyGameScene::Draw(HDC hDC)
 	box.img.Draw(hDC, box.size.left + 42, box.size.top + 42, 43, 43, 0, 0, 43, 43);
 	box.img.Draw(hDC, box.size.left + 42, box.size.top + 42 * 2, 43, 43, 0, 0, 43, 43);
 
+	for (const Obstacle& o : hearts) {
+		if (o.type == LUIGI_HEART) {
+			luigi_life.Draw(hDC, o.size.left, o.size.top, 30, 34, 0, 0, 30, 34);
+		}
+		else {
+			mario_life.Draw(hDC, o.size.left, o.size.top, 30, 34, 0, 0, 30, 34);
+		}
+	}
+	
 	DrawTime(hDC);
+
+	mario->img.Draw(hDC, mario->position.x, mario->position.y,
+		mario->imgWidth, mario->imgHeight,
+		mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->animIndex,
+		mario->imgWidth, mario->imgHeight);
+	luigi->img.Draw(hDC, luigi->position.x, luigi->position.y,
+		luigi->imgWidth, luigi->imgHeight,
+		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->animIndex,
+		luigi->imgWidth, luigi->imgHeight);
+
 }
 
 void EasyGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)

@@ -5,16 +5,19 @@ public:
 	Player* mario;
 	Player* luigi;
 
-	CImage backgroud;
+	CImage backgroud, mario_life, luigi_life;
 
 	vector<Obstacle> obs;
+	vector<Obstacle> hearts;
 
 	int timeM;
 	int timeS;
 
+
 public:
 	void InitPlayer();
 	void InitObstacles();
+	void InitHearts();
 	void CollisionCheck();
 	void GameEnd();
 	void DrawTime(HDC hDC);
