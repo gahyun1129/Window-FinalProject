@@ -29,6 +29,9 @@ void EasyGameScene::InitPlayer()
 
 	mario->type = MARIO;
 	luigi->type = LUIGI;
+
+	mario->spawnPoint = mario->position;
+	luigi->spawnPoint = luigi->position;
 }
 
 void EasyGameScene::InitObstacles()

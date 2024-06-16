@@ -32,6 +32,9 @@ void HardGameScene::InitPlayer()
 
 	luigi->animIndex = 0;
 	luigi->dir = LEFT;
+
+	mario->spawnPoint = mario->position;
+	luigi->spawnPoint = luigi->position;
 }
 
 void HardGameScene::InitObstacles()

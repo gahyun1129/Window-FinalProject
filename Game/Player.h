@@ -15,6 +15,7 @@ public:
 	int imgFrameH = 0;		// animation index max value
 
 	POINT position = {0, 0};
+	POINT spawnPoint = { 0, 0 };
 	DIRECTION dir = RIGHT;
 
 	int leftMax = 0;
