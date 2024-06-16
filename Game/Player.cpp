@@ -107,22 +107,26 @@ void Player::CheckWithWall(Obstacle& o)
 		break;
 	}
 	case MARIO: {
-		if (type == LUIGI) {
+		if (type == LUIGI && !isHero) {
 			life -= 1;
 			position = spawnPoint;
 		}
 		break;
 	}	
 	case LUIGI: {
-		if (type == MARIO) {
+		if (type == MARIO && !isHero) {
 			life -= 1;
 			position = spawnPoint;
 		}
 		break;
 	}
 	case BOTH: {
-		life -= 1;
-		position = spawnPoint;
+		if (!isHero)
+		{
+			life -= 1;
+			position = spawnPoint;
+		}
+
 		break;
 	}
 	case SWITCHSTICK: {

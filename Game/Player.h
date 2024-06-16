@@ -30,6 +30,7 @@ public:
 
 	bool isFalling;
 	bool isFlying;
+	bool isHero;
 
 	TYPE type;
 

@@ -473,7 +473,12 @@ void EasyGameScene::DrawUI(HDC hDC)
 	float drawY = 40;
 
 	// mario
-	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	if (mario->isHero) {
+		hBrush = CreateSolidBrush(RGB(255, 255, 0));
+	}
+	else {
+		hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	}
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
@@ -488,7 +493,12 @@ void EasyGameScene::DrawUI(HDC hDC)
 	}
 
 	// luigi
-	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	if (luigi->isHero) {
+		hBrush = CreateSolidBrush(RGB(255, 255, 0));
+	}
+	else {
+		hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	}
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
 	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 	oldPen = (HPEN)SelectObject(hDC, hPen);
@@ -585,6 +595,10 @@ void EasyGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 			mario->dir = RIGHT;
 			mario->isRight = true;
 			mario->animIndex = 1;
+		}
+		else if (wParam == VK_K) {
+			mario->isHero = !mario->isHero;
+			luigi->isHero = !luigi->isHero;
 		}
 		else if (wParam == VK_UP) {
 			if (!luigi->isJump && !luigi->isFalling) {
