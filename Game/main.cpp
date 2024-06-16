@@ -2,7 +2,7 @@
 
 HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"Window Class Name";
-LPCTSTR lpszWindowName = L"Inversus";
+LPCTSTR lpszWindowName = L"Game";
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 GameFramework Framework;
 
