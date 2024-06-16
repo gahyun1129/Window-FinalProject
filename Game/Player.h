@@ -28,6 +28,7 @@ public:
 	bool isRight;
 
 	bool isFalling;
+	bool isFlying;
 
 	TYPE type;
 
@@ -47,5 +48,6 @@ public:
 	void CheckFloor();
 
 	void DyingUpdate();
+	void Flying();
 };
 
