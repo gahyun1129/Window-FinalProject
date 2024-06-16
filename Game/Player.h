@@ -36,7 +36,7 @@ public:
 
 	bool isEnd;
 public:
-	int life = 1;
+	int life = 5;
 
 	bool isDying = false;
 	const float GRAVITY = 1.0f;

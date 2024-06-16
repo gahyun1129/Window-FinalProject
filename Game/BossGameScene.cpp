@@ -90,6 +90,7 @@ void BossGameScene::Update(const float frameTime)
 		}
 		else if (gameEndingTime <= (int)elapsed.count())
 		{
+			Framework.mainCamera->pos.x = 0;
 			Scene* scene = Framework.CurScene;   // ÇöÀç ¾ÀÀ» tmp¿¡ ³Ö°í Áö¿öÁÜ
 			Framework.CurScene = new GameOverScene;
 			Framework.CurScene->Init();
@@ -106,6 +107,7 @@ void BossGameScene::Update(const float frameTime)
 		}
 		else if (gameEndingTime <= (int)elapsed.count())
 		{
+			Framework.mainCamera->pos.x = 0;
 			Scene* scene = Framework.CurScene;   // ÇöÀç ¾ÀÀ» tmp¿¡ ³Ö°í Áö¿öÁÜ
 			Framework.CurScene = new ClearScene;
 			Framework.CurScene->Init();
