@@ -294,6 +294,8 @@ void HardGameScene::GameEnd()
 		Scene* scene = Framework.CurScene;   // ÇöÀç ¾ÀÀ» tmp¿¡ ³Ö°í Áö¿öÁÜ
 		Framework.CurScene = new BossGameScene;
 		Framework.CurScene->Init();
+		dynamic_cast<BossGameScene*>(Framework.CurScene)->mario->life = mario->life;
+		dynamic_cast<BossGameScene*>(Framework.CurScene)->luigi->life = luigi->life;
 		Framework.SceneIndex = HARD;
 		delete scene;
 	}
@@ -333,6 +335,46 @@ void HardGameScene::DrawTime(HDC hDC)
 	DeleteObject(hFont);
 }
 
+void HardGameScene::DrawUI(HDC hDC)
+{
+	HBRUSH hBrush, oldBrush;
+	HPEN hPen, oldPen;
+
+	float imageSize = 50;
+	float lifeSize = 40;
+	float drawY = 40;
+
+	// mario
+	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	oldPen = (HPEN)SelectObject(hDC, hPen);
+	RoundRect(hDC, Framework.mainCamera->pos.x, drawY, imageSize + Framework.mainCamera->pos.x, drawY + imageSize, 10, 10);
+	DeleteObject(hBrush);
+	DeleteObject(hPen);
+	mario_img.Draw(hDC, Framework.mainCamera->pos.x, drawY, imageSize, imageSize, 0, 0, 1682, 1682);
+
+	for (int i = 0; i < mario->life; i++)
+	{
+		life_img.Draw(hDC, imageSize + 10 + lifeSize * i + Framework.mainCamera->pos.x, drawY + imageSize / 2 - lifeSize / 2, lifeSize, lifeSize, 0, 0, 120, 120);
+	}
+
+	// luigi
+	hBrush = CreateSolidBrush(RGB(255, 255, 255));
+	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
+	hPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	oldPen = (HPEN)SelectObject(hDC, hPen);
+	RoundRect(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize, drawY, Framework.size.right + Framework.mainCamera->pos.x, drawY + imageSize, 10, 10);
+	DeleteObject(hBrush);
+	DeleteObject(hPen);
+	luigi_img.Draw(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize, drawY, imageSize, imageSize, 0, 0, 1494, 1494);
+
+	for (int i = 0; i < luigi->life; i++)
+	{
+		life_img.Draw(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize - 10 - lifeSize * i - lifeSize, drawY + imageSize / 2 - lifeSize / 2, lifeSize, lifeSize, 0, 0, 120, 120);
+	}
+}
+
 ////////////////////////////////////////////////////////////////////
 
 HardGameScene::~HardGameScene()
@@ -344,6 +386,10 @@ HardGameScene::~HardGameScene()
 void HardGameScene::Init()
 {
 	backgroud.Load(L"Image/hard.png");
+
+	mario_img.Load(L"Image/mario_image.png");
+	luigi_img.Load(L"Image/luigi_image.png");
+	life_img.Load(L"Image/life.png");
 
 	InitPlayer();
 	InitObstacles();
@@ -374,9 +420,9 @@ void HardGameScene::Draw(HDC hDC)
 {
 	backgroud.Draw(hDC, 0, 0, Framework.size.right, Framework.size.bottom, 0, 0, 800, 600);
 	
-	for (Obstacle o : obs) {
-		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
-	}
+	//for (Obstacle o : obs) {
+	//	Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
+	//}
 
 	for (const Obstacle& o : hearts) {
 		if (o.type == LUIGI_HEART) {
@@ -387,7 +433,10 @@ void HardGameScene::Draw(HDC hDC)
 		}
 	}
 
+	DrawUI(hDC);
+
 	DrawTime(hDC);
+
 
 	mario->img.Draw(hDC, mario->position.x, mario->position.y,
 		mario->imgWidth, mario->imgHeight,

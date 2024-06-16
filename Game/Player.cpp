@@ -115,13 +115,13 @@ void Player::CheckWithWall(Obstacle& o)
 	}	
 	case LUIGI: {
 		if (type == MARIO) {
-			life - 1;
+			life -= 1;
 			position = spawnPoint;
 		}
 		break;
 	}
 	case BOTH: {
-		life - 1;
+		life -= 1;
 		position = spawnPoint;
 		break;
 	}
