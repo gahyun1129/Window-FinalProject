@@ -7,6 +7,7 @@ public:
 	Player* luigi;
 
 	CImage backgroud, mario_life, luigi_life;
+	CImage mario_img, luigi_img, life_img;
 
 	vector<Obstacle> obs;
 	vector<Obstacle> hearts;
@@ -28,6 +29,8 @@ public:
 	void CollisionCheck();
 	void GameEnd();
 	void DrawTime(HDC hDC);
+	void DrawUI(HDC hDC);
+
 public:
 	virtual ~EasyGameScene() override;
 	virtual void Init() override;
