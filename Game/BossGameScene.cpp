@@ -20,7 +20,7 @@ void BossGameScene::Init()
 {
 	//// Init Scene ////
 	background.Load(L"Image/Stage-ground.png");
-	cloud.Load(L"Image/clouds.png");
+	cloud.Load(L"Image/purple_cloud.png");
 	startTime = chrono::high_resolution_clock::now();
 	prevJumpingTime = -1;
 
@@ -310,7 +310,7 @@ void BossGameScene::Draw(HDC hDC)
 	DeleteObject(hBrush);
 	DeleteObject(hPen);
 	background.Draw(hDC, 0, 0, Framework.size.right + Framework.mainCamera->pos.x, Framework.size.bottom, 0, Framework.mainCamera->pos.y, 800 + Framework.mainCamera->pos.x, 600);
-	cloud.Draw(hDC, 0, 100, Framework.size.right + Framework.mainCamera->pos.x, 100, 0, Framework.mainCamera->pos.y, 300 + Framework.mainCamera->pos.x, 104);
+	DrawClouds(hDC);
 	DrawPlayerHP(hDC);
 
 	//floorImg.Draw(hDC, mario->position.x, mario->position.y,
@@ -566,5 +566,32 @@ void BossGameScene::DrawPlayerHP(HDC hDC)
 	for (int i = 0; i < luigi->life; i++)
 	{
 		lifeImage.Draw(hDC, Framework.mainCamera->pos.x + Framework.size.right - imageSize - 10 - lifeSize * i - lifeSize, drawY + imageSize / 2 - lifeSize / 2, lifeSize, lifeSize, 0, 0, 120, 120);
+	}
+}
+
+void BossGameScene::DrawClouds(HDC hDC)
+{
+	static std::random_device rd;
+	static std::mt19937 gen(rd());
+	static std::uniform_real_distribution<> disX(0, 1500);
+	static std::uniform_real_distribution<> disY(150, 200);
+
+	static const int cloudNum = 10;
+
+	static float randomX[cloudNum] = { -1 };
+	static float randomY[cloudNum] = { -1 };
+	
+	if (randomX[0] == -1)
+	{
+		for (int i = 0; i < cloudNum; i++)
+		{
+			randomX[i] = disX(gen);
+			randomY[i] = disY(gen);
+		}
+	}
+
+	for (int i = 0; i < cloudNum; i++)
+	{
+		cloud.Draw(hDC, randomX[i], randomY[i], 100, 100, 0, 0, 500, 500);
 	}
 }

@@ -39,5 +39,6 @@ private:
 	void AddRay();
 	void DrawBossHP(HDC hDC, const int hp);
 	void DrawPlayerHP(HDC hDC);
+	void DrawClouds(HDC hDC);
 };
 
