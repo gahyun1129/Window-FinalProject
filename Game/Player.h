@@ -28,6 +28,7 @@ public:
 	bool isRight;
 
 	bool isFalling;
+	bool isFlying;
 
 	TYPE type;
 
@@ -38,5 +39,6 @@ public:
 	void PlayAnimation();
 	void CheckWithWall(Obstacle& o);
 	void CheckFloor();
+	void Flying();
 };
 

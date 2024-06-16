@@ -4,11 +4,18 @@ void Player::Move()
 {
 	if (isLeft) {
 		position.x -= 7;
-		if (position.x <= 0) {
+		if (position.x <= 20) {
 			position.x += 7;
 		}
 		if (position.x <= leftMax) {
+			isFlying = false;
 			isFalling = true;
+			if (dir == LEFT) {
+				animIndex = 0;
+			}
+			else {
+				animIndex = 1;
+			}
 		}
 	}
 	else if (isRight) {
@@ -17,7 +24,14 @@ void Player::Move()
 			position.x -= 7;
 		}
 		if (position.x + imgWidth >= rightMax) {
+			isFlying = false;
 			isFalling = true;
+			if (dir == LEFT) {
+				animIndex = 0;
+			}
+			else {
+				animIndex = 1;
+			}
 		}
 	}
 	if (isJump) {
@@ -62,6 +76,7 @@ void Player::CheckWithWall(Obstacle& o)
 	{
 	case WALL_BOTTOM: {
 		isFalling = true;
+		isFlying = false;
 		isJump = false;
 		jumpTime = 0;
 		jumpCoolTime = 10;
@@ -130,6 +145,18 @@ void Player::CheckWithWall(Obstacle& o)
 		}
 		break;
 	}
+	case JUMPSTEP: {
+		isFlying = true;
+		leftMax = o.size.left;
+		rightMax = o.size.right;
+		if (dir == LEFT) {
+			animIndex = 2;
+		}
+		else {
+			animIndex = 3;
+		}
+		break;
+	}
 	}
 }
 
@@ -140,3 +167,12 @@ void Player::CheckFloor()
 		position.y += 9;
 	}
 }
+
+void Player::Flying()
+{
+	if (isFlying) {
+		position.y -= 9;
+	}
+}
+
+

@@ -139,9 +139,86 @@ void HardGameScene::InitObstacles()
 	o.type = WALL_TOP;
 	obs.push_back(o); // 8 floor - 1
 
-	o.size = { 115, 120, 500, 125 };
+	o.size = { 585, 120, 940, 125 };
 	o.type = WALL_TOP;
 	obs.push_back(o); // 8 floor - 2
+
+	o.size = { 115, 145, 500, 150 };
+	o.type = WALL_BOTTOM;
+	obs.push_back(o); // 8 floor_bottom - 1
+
+	o.size = { 585, 145, 940, 150 };
+	o.type = WALL_BOTTOM;
+	obs.push_back(o); // 8 floor_bottom - 2
+
+	o.size = { 520, 240, 565, 245 };
+	o.type = WALL_TOP;
+	obs.push_back(o); // 9 floor - inner
+
+	o.size = { 500, 380, 585, 385 };
+	o.type = WALL_BOTTOM;
+	obs.push_back(o); // 9 floor_bottom - inner
+
+	o.size = { 530, 385, 535, 535 };
+	o.type = WALL_RIGHT;
+	obs.push_back(o); // 9 floor - right_in
+
+	o.size = { 550, 385, 555, 535 };
+	o.type = WALL_LEFT;
+	obs.push_back(o); // 9 floor - left_in
+
+	o.size = { 0, 30, 1100, 35 };
+	o.type = WALL_BOTTOM;
+	obs.push_back(o); // top
+
+	//////////////////////////////////////////////////
+
+	o.size = { 310, 455, 360, 535 };
+	o.type = MARIO_END;
+	obs.push_back(o);
+
+	o.size = { 725, 455, 775, 535 };
+	o.type = LUIGI_END;
+	obs.push_back(o);
+
+	///////////////////////////////////////////////////
+
+	o.size = { 30, 120, 120, 450 };
+	o.type = JUMPSTEP;
+	obs.push_back(o);
+
+	o.size = { 965, 120, 1055, 450 };
+	o.type = JUMPSTEP;
+	obs.push_back(o);
+
+	//////////////////////////////////////////////////
+
+	o.size = { 200, 825, 360, 880 };
+	o.type = MARIO;
+	obs.push_back(o); 
+
+
+	o.size = { 725, 825, 885, 880 };
+	o.type = LUIGI;
+	obs.push_back(o);
+
+	o.size = { 725, 650, 885, 665 };
+	o.type = MARIO;
+	obs.push_back(o);
+
+	o.size = { 200, 650, 360, 665 };
+	o.type = LUIGI;
+	obs.push_back(o);
+
+	o.size = { 310, 385, 360, 400 };
+	o.type = MARIO;
+	obs.push_back(o);
+
+	o.size = { 725, 385, 775, 400 };
+	o.type = LUIGI;
+	obs.push_back(o);
+
+	///////////////////////////////////////////////////
 }
 
 void HardGameScene::CollisionCheck()
@@ -230,6 +307,9 @@ void HardGameScene::Update(const float frameTime)
 	mario->CheckFloor();
 	luigi->CheckFloor();
 
+	mario->Flying();
+	luigi->Flying();
+
 	mario->PlayAnimation();
 	luigi->PlayAnimation();
 
@@ -241,6 +321,11 @@ void HardGameScene::Update(const float frameTime)
 void HardGameScene::Draw(HDC hDC)
 {
 	backgroud.Draw(hDC, 0, 0, Framework.size.right, Framework.size.bottom, 0, 0, 800, 600);
+	
+	for (Obstacle o : obs) {
+		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
+	}
+
 	mario->img.Draw(hDC, mario->position.x, mario->position.y,
 		mario->imgWidth, mario->imgHeight,
 		mario->imgWidth * mario->imgIndex, mario->imgHeight * mario->animIndex,
@@ -250,9 +335,7 @@ void HardGameScene::Draw(HDC hDC)
 		luigi->imgWidth * luigi->imgIndex, luigi->imgHeight * luigi->animIndex,
 		luigi->imgWidth, luigi->imgHeight);
 
-	for (Obstacle o : obs) {
-		Rectangle(hDC, o.size.left, o.size.top, o.size.right, o.size.bottom);
-	}
+
 
 	DrawTime(hDC);
 }
