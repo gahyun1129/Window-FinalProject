@@ -499,6 +499,15 @@ void HardGameScene::ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam)
 			luigi->isRight = true;
 			luigi->animIndex = 1;
 		}
+		if (wParam == VK_B) {
+			Scene* scene = Framework.CurScene;   // ÇöÀç ¾ÀÀ» tmp¿¡ ³Ö°í Áö¿öÁÜ
+			Framework.CurScene = new BossGameScene;
+			Framework.CurScene->Init();
+			dynamic_cast<HardGameScene*>(Framework.CurScene)->mario->life = mario->life;
+			dynamic_cast<HardGameScene*>(Framework.CurScene)->luigi->life = luigi->life;
+			Framework.SceneIndex = HARD;
+			delete scene;
+		}
 		break;
 	}
 	case WM_LBUTTONDOWN: {
