@@ -2,9 +2,11 @@
 class Ball
 {
 public:
+	string playerName;
 	POINT position;
 	float vx, vy;
 	float halfSize = 5;
+	COLORREF color;
 
 	// 중력 가속도
 	const float GRAVITY = 1.0f;
@@ -15,7 +17,7 @@ public:
 	int startTime;
 
 public:
-	void Init(const POINT position, const DIRECTION dir, const int currTime);
+	void Init(const POINT position, const DIRECTION dir, const int currTime, const string name);
 	void Update();
 	void Draw(HDC hDC, int sceneX);
 };

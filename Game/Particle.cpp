@@ -7,10 +7,10 @@ void Particle::Init(const POINT center)
 	offsetX = 58;
 	offsetY = 58;
 
-	static std::random_device rd;
-	static std::mt19937 gen(rd());
-	static std::uniform_real_distribution<> disX(center.x - 20, center.x + 20);
-	static std::uniform_real_distribution<> disY(center.y - 20, center.y + 20);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> disX(center.x - 20, center.x + 20);
+	std::uniform_real_distribution<> disY(center.y - 20, center.y + 20);
 
 	position.x = disX(gen);
 	position.y = disY(gen);

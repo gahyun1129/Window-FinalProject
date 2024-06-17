@@ -2,8 +2,9 @@
 
 extern GameFramework Framework;
 
-void Ball::Init(const POINT pos, const DIRECTION dir, const int currTime)
+void Ball::Init(const POINT pos, const DIRECTION dir, const int currTime, const string name)
 {
+    playerName = name;
 	position.x = pos.x;
 	position.y = pos.y;
 	if (dir == LEFT) {
@@ -14,6 +15,10 @@ void Ball::Init(const POINT pos, const DIRECTION dir, const int currTime)
 	}
 	vy = -10;
     startTime = currTime;
+    if (name == "mario")
+        color = RGB(255, 102, 0);
+    else if (name == "luigi")
+        color = RGB(0, 204, 51);
 }
 
 void Ball::Update()
@@ -52,9 +57,9 @@ void Ball::Draw(HDC hDC, int sceneX)
 	HBRUSH hBrush, oldBrush;
 	HPEN hPen, oldPen;
 
-	hBrush = CreateSolidBrush(RGB(0, 255, 255));
+	hBrush = CreateSolidBrush(color);
 	oldBrush = (HBRUSH)SelectObject(hDC, hBrush);
-	hPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
+	hPen = CreatePen(PS_SOLID, 1, color);
 	oldPen = (HPEN)SelectObject(hDC, hPen);
 	Ellipse(hDC, position.x - sceneX - halfSize, position.y - halfSize, position.x - sceneX + halfSize, position.y + halfSize);
 	DeleteObject(hBrush);

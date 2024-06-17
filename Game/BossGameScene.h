@@ -3,6 +3,7 @@ class BossGameScene : public Scene
 {
 
 public:
+	CImage koopaImage;
 	CImage marioImage;
 	CImage luigiImage;
 	CImage lifeImage;
@@ -28,6 +29,8 @@ public:
 	int prevSkillTime;
 	int prevParticleTime;
 	int gameEndingTime = -1;
+	int lastMarioAttackTime;
+	int lastLuigiAttackTime;
 public:
 	virtual ~BossGameScene() override;
 	virtual void Init() override;
@@ -36,10 +39,12 @@ public:
 	virtual void ProcessKey(UINT iMessage, WPARAM wParam, LPARAM lParam) override;
 
 private:
+	void AddPlayerBall(const string name);
 	void AddFireBall();
 	void AddRay();
 	void DrawBossHP(HDC hDC, const int hp);
 	void DrawPlayerHP(HDC hDC);
 	void DrawClouds(HDC hDC);
+	void DrawTime(HDC hDC);
 };
 
